@@ -3,7 +3,7 @@ group_project2.py.
 
 
 "Adventurer's Quest Back Home"
-Elena, Simplicio, Feisal
+Elena, Simplicio,
 
 
 """
@@ -17,21 +17,21 @@ inventory: list[str] = []
 
 def get_choice(prompt: str, valid_options: list[str]) -> str:
     while True:
-       try:
-           user_input: str = input(prompt).strip()
-          
-           # Raising an error to communicate bad state between logic blocks
-           if not user_input:
-               raise ValueError("Input cannot be empty.")
-              
-           if user_input in valid_options:
-               return user_input
-              
-           print(f"Invalid choice. Please select from your options: {', '.join(valid_options)}")
-          
-       except ValueError as error:
-           # Catches empty string exceptions and keeps the terminal running smoothly
-           print(f"[Input Error] {error} Please try typing your option again.")
+        try:
+            user_input: str = input(prompt).strip()
+            
+            # Raising an error to communicate bad state between logic blocks
+            if not user_input:
+                raise ValueError("Input cannot be empty.")
+                
+            if user_input in valid_options:
+                return user_input
+                
+            print(f"Invalid choice. Please select from your options: {', '.join(valid_options)}")
+            
+        except ValueError as error:
+            # Catches empty string exceptions and keeps the terminal running smoothly
+            print(f"[Input Error] {error} Please try typing your option again.")
 
 
 
@@ -42,20 +42,20 @@ def get_choice(prompt: str, valid_options: list[str]) -> str:
 
 
 def game_over() -> bool:
-   """
-   Prompts the player to restart or exit the game loop.
+    """
+    Prompts the player to restart or exit the game loop.
 
 
-   Returns:
-       bool: True if the user wants to replay, False otherwise.
-   """
-   print("\nWould you like to play again?")
-   choice: str = get_choice("Enter 1 for Yes or 2 for No: ", ["1", "2"])
+    Returns:
+        bool: True if the user wants to replay, False otherwise.
+    """
+    print("\nWould you like to play again?")
+    choice: str = get_choice("Enter 1 for Yes or 2 for No: ", ["1", "2"])
 
 
-   if choice == "1":
-       return True
-   return False
+    if choice == "1":
+        return True
+    return False
 
 
 
@@ -88,8 +88,12 @@ def examine_keys() -> None:
 
        if key_num == "2":
            print("\nKey number 2 works!")
-           print("You have unlocked the door and escaped the Demon Realm!")
-           print("THE END")
+           print("You have unlocked the door but the walls start shaking and you see a clock on the wall.")
+           print("You look at the clock and see words carved into the wall right next to it.")
+           print("The words have the same style as the symbols so you go over and read them.")
+           text: str = "You have 1 minute to get across without the  "
+           symbols: str = "\x1B[3m" + text + "\x1B[0m"
+           print(symbols)
            door_locked = False
        else:
            print(f"Key number {key_num} did not work.")
@@ -132,47 +136,47 @@ def break_door() -> None:
 
 
 def check_it_out() -> None:
-   """
-   Handles the basement discovery event.
-   Populates the player's inventory list with items needed for subsequent scenes.
-   """
-   print("\nYou look around among the rabble of the shack")
-   print("and find an old door and a box of keys.")
-   print("Buried under some wood, you pick up the keys")
+    """
+    Handles the basement discovery event.
+    Populates the player's inventory list with items needed for subsequent scenes.
+    """
+    print("\nYou look around among the rabble of the shack")
+    print("and find an old door and a box of keys.")
+    print("Buried under some wood, you pick up the keys")
 
 
-   # Added dynamic state tracking to conditionally modify gameplay options later
-   if "Mysterious Keys" not in inventory:
-       inventory.append("Mysterious Keys")
-       print("[System: 'Mysterious Keys' added to your inventory!]")
+    # Added dynamic state tracking to conditionally modify gameplay options later
+    if "Mysterious Keys" not in inventory:
+        inventory.append("Mysterious Keys")
+        print("[System: 'Mysterious Keys' added to your inventory!]")
 
 
-   print("You try to open the door, only to find that it is locked.")
-   print("You spot symbols on the door that you missed before.")
-   print("They remind you of the magical symbols that appeared")
-   print("beneath you in the abandoned cave.")
-   print("You're not an expert at magic but you know your way")
-   print("around casting visual runes.")
+    print("You try to open the door, only to find that it is locked.")
+    print("You spot symbols on the door that you missed before.")
+    print("They remind you of the magical symbols that appeared")
+    print("beneath you in the abandoned cave.")
+    print("You're not an expert at magic but you know your way")
+    print("around casting visual runes.")
 
 
-   print("\nWhat will you do next?")
-   print("1. Examine keys closer")
-   print("2. Leave the shack and try to get home")
-   print("3. Try and break down the door")
+    print("\nWhat will you do next?")
+    print("1. Examine keys closer")
+    print("2. Leave the shack and try to get home")
+    print("3. Try and break down the door")
 
 
-   choice: str = get_choice("\nChoose 1, 2, or 3: ", ["1", "2", "3"])
+    choice: str = get_choice("\nChoose 1, 2, or 3: ", ["1", "2", "3"])
 
 
-   if choice == "1":
-       if "Mysterious Keys" in inventory:
+    if choice == "1":
+        if "Mysterious Keys" in inventory:
            examine_keys()
-       else:
-           print("You don't have the keys to examine!")
-   elif choice == "2":
-       leave_shack()
-   elif choice == "3":
-       break_door()
+        else:
+            print("You don't have the keys to examine!")
+    elif choice == "2":
+        leave_shack()
+    elif choice == "3":
+        break_door()
 
 
 
