@@ -1,23 +1,38 @@
 """
-group_project2.py.
+    group_project2.py.
 
 
-"Adventurer's Quest Back Home"
-Elena, Simplicio,
+    "Adventurer's Quest Back Home"
+    Elena, Simplicio,
 
 
 """
 
-
 # Global inventory list to track player items across different story paths
 inventory: list[str] = []
 
-
-
-
 def get_choice(prompt: str, valid_options: list[str]) -> str:
+    """
+    If the user puts in an invalid answer, this function tells them and helps them fix it.
+
+    Parameters
+    ----------
+    prompt : str
+        
+    valid_options : list[str]
+        This is a list that will show what options the user has after putting in the wrong input.
+
+    Returns
+    -------
+    str
+        
+
+    Raises
+    ------
+    ValueError
+        Tells the user that the input cannot be empty if they do not put anything in the terminal.
+    """
     while True:
-        try:
             user_input: str = input(prompt).strip()
             
             # Raising an error to communicate bad state between logic blocks
@@ -29,17 +44,8 @@ def get_choice(prompt: str, valid_options: list[str]) -> str:
                 
             print(f"Invalid choice. Please select from your options: {', '.join(valid_options)}")
             
-        except ValueError as error:
-            # Catches empty string exceptions and keeps the terminal running smoothly
-            print(f"[Input Error] {error} Please try typing your option again.")
-
-
-
 
 # ----- Ending Functions -----
-
-
-
 
 def game_over() -> bool:
     """
@@ -52,60 +58,45 @@ def game_over() -> bool:
     print("\nWould you like to play again?")
     choice: str = get_choice("Enter 1 for Yes or 2 for No: ", ["1", "2"])
 
-
     if choice == "1":
         return True
     return False
-
-
-
-
 # ----- Story Functions -----
 
-
-
-
 def examine_keys() -> None:
-   """
-   Simulates a multi-attempt lock-picking puzzle using a while loop.
+    """
+    Simulates a multi-attempt lock-picking puzzle using a while loop.
 
 
-   Requires the user to select the correct key out of 4 options.
-   """
-   print("\nYou find that 4 of the keys have the same patterns on the door.")
+    Requires the user to select the correct key out of 4 options.
+    """
+    print("\nYou find that 4 of the keys have the same patterns on the door.")
 
-
-   attempts: int = 0
-   max_attempts: int = 3
-   door_locked: bool = True
-
+    attempts: int = 0
+    max_attempts: int = 3
+    door_locked: bool = True
 
    # Added a while loop to allow multiple attempts before failing
-   while door_locked and attempts < max_attempts:
-       print(f"\nWhich key will you try? (Remaining attempts: {max_attempts - attempts})")
-       key_num: str = get_choice("Choose a key (1-4): ", ["1", "2", "3", "4"])
+    while door_locked and attempts < max_attempts:
+        print(f"\nWhich key will you try? (Remaining attempts: {max_attempts - attempts})")
+        key_num: str = get_choice("Choose a key (1-4): ", ["1", "2", "3", "4"])
 
+        if key_num == "2":
+            print("\nKey number 2 works!")
+            print("You have unlocked the door but the walls start shaking and you see a clock on the wall.")
+            print("You look at the clock and see words carved into the wall right next to it.")
+            print("The words have the same style as the symbols so you go over and read them.")
+            text: str = "You have 1 minute to get across without the  "
+            symbols: str = "\x1B[3m" + text + "\x1B[0m"
+            print(symbols)
+            door_locked = False
+        else:
+            print(f"Key number {key_num} did not work.")
+            attempts += 1
 
-       if key_num == "2":
-           print("\nKey number 2 works!")
-           print("You have unlocked the door but the walls start shaking and you see a clock on the wall.")
-           print("You look at the clock and see words carved into the wall right next to it.")
-           print("The words have the same style as the symbols so you go over and read them.")
-           text: str = "You have 1 minute to get across without the  "
-           symbols: str = "\x1B[3m" + text + "\x1B[0m"
-           print(symbols)
-           door_locked = False
-       else:
-           print(f"Key number {key_num} did not work.")
-           attempts += 1
-
-
-   if door_locked:
-       print("\nYour time ran out! The lock jams completely.")
-       print("THE END")
-
-
-
+    if door_locked:
+        print("\nYour time ran out! The lock jams completely.")
+        print("THE END")
 
 def leave_shack() -> None:
    """
