@@ -269,14 +269,7 @@ def abandoned_shack() -> None:
    elif choice == "2":
        call_out()
 
-
-
-
 # ----- Main Game Loop -----
-
-
-
-
 def play_game() -> None:
    """
    Executes the core intro narrative structure and branches the starting choices.
